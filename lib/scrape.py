@@ -34,7 +34,7 @@ def get_latest_stock_additions():
                     'name': line.attrs['data-name'],
                     'distillery': distillery.text,
                     'url': line.attrs['data-product-url'],
-                    'price': format_price(price.text)
+                    'price': format_price(price.text) if price else "unknown"
                 })
             else:
                 if len(stock['whiskies']) == 0:

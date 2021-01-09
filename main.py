@@ -1,17 +1,20 @@
-from scrape import get_latest_stock_additions, display_stock
-from storage import has_stock_update, store_stock
+from lib.scrape import get_latest_stock_additions, display_stock
+from lib.storage import has_stock_update, store_stock
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 def main():
     stock = get_latest_stock_additions()
     display_stock(stock)
     if has_stock_update(stock):
-        print('Everything is up to date')
+        logging.info('Everything is up to date')
     else:
         store_stock(stock)
 
 
-def lambda_handler(event, context):
+def lambda_handler():
     main()
 
 
