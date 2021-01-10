@@ -8,17 +8,24 @@ from decimal import *
 class TestScrape(unittest.TestCase):
 
     @responses.activate
-    def test_simple(self):
-        responses.add(responses.GET, 'http://twitter.com/api/1/foobar',
-                      json={'error': 'not found'}, status=404)
+    def test_get_stock(self):
+        with open('tests/snapshots/mom_new_stock.html', 'r') as reader:
+            responses.add(responses.GET, 'https://www.masterofmalt.com/new-arrivals/whisky-new-arrivals/',
+                          body=reader.read(), status=200)
 
-        resp = requests.get('http://twitter.com/api/1/foobar')
+            stock = scrape.get_latest_stock_additions()
+            self.assertEqual('08-01-2021', stock['date'])
+            self.assertEqual(1, len(stock['whiskies']))
 
-        self.assertEqual(resp.json(), {"error": "not found"})
+    @responses.activate
+    def test_get_stock_with_auctions(self):
+        with open('tests/snapshots/new_stock_with_auctions.html', 'r') as reader:
+            responses.add(responses.GET, 'https://www.masterofmalt.com/new-arrivals/whisky-new-arrivals/',
+                          body=reader.read(), status=200)
 
-        self.assertEqual(len(responses.calls), 1)
-        self.assertEqual(responses.calls[0].request.url, 'http://twitter.com/api/1/foobar')
-        self.assertEqual(responses.calls[0].response.text, '{"error": "not found"}')
+            stock = scrape.get_latest_stock_additions()
+            self.assertEqual('07-01-2021', stock['date'])
+            self.assertEqual(6, len(stock['whiskies']))
 
     def test_release_date_extraction(self):
         self.assertEqual(scrape.get_release_date("1st January 2020"), "01-01-2020")
