@@ -1,5 +1,5 @@
 import unittest
-from lib import scrape
+from src import scrape
 import responses
 import requests
 from decimal import *

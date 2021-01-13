@@ -1,9 +1,0 @@
-version: 0.0
-resources:
-  - scan_mom_new_stock:
-    type: AWS::Lambda::Function
-    properties:
-      name: "scan_mom_new_stock"
-      alias: "scan_mom_new_stock"
-      currentversion: "1"
-      targetversion: "2"

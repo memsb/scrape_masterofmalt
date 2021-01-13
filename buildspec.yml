@@ -4,14 +4,13 @@ phases:
   install:
     runtime-versions:
       python: 3.x
-  pre_build:
-    commands:
-      - echo Nothing to do in the pre_build phase...
   build:
     commands:
-      - echo Build started on `date`
-      - ./build.sh
-      - sam build -s build && sam package --s3-bucket buckleytech-lambda
-  post_build:
-    commands:
-      - echo Build completed on `date`
+      - sam build -s build
+      - export BUCKET=buckleytech-lambda
+      - sam package --s3-bucket $BUCKET --output-template-file outputtemplate.yml
+  artifacts:
+    type: zip
+    files:
+      - template.yml
+      - outputtemplate.yml
