@@ -16,6 +16,28 @@ Resources:
             - Effect: "Allow"
               Action:
                 - "lambda:InvokeFunction"
+                - "dynamodb:ListTables"
               Resource: '*'
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:BatchGetItem",
+                - "dynamodb:BatchWriteItem",
+                - "dynamodb:PutItem",
+                - "dynamodb:DescribeTable",
+                - "dynamodb:GetItem",
+                - "dynamodb:Scan",
+                - "dynamodb:Query",
+                - "dynamodb:UpdateItem"
+              Resource: "arn:aws:dynamodb:eu-west-2:295760464315:table/master_of_malt"
       DeploymentPreference:
         Type: AllAtOnce
+  EventBridgeTrigger:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "Trigger scan_mom_lambda"
+      Name: "TriggerMomScan"
+      ScheduleExpression: "cron(0/15 8-18 * * ? *)"
+      Targets:
+        - "arn:aws:lambda:eu-west-2:295760464315:function:scan_mom_new_stock"
+
+
