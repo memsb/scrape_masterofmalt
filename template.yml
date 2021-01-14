@@ -20,13 +20,13 @@ Resources:
               Resource: '*'
             - Effect: "Allow"
               Action:
-                - "dynamodb:BatchGetItem",
-                - "dynamodb:BatchWriteItem",
-                - "dynamodb:PutItem",
-                - "dynamodb:DescribeTable",
-                - "dynamodb:GetItem",
-                - "dynamodb:Scan",
-                - "dynamodb:Query",
+                - "dynamodb:BatchGetItem"
+                - "dynamodb:BatchWriteItem"
+                - "dynamodb:PutItem"
+                - "dynamodb:DescribeTable"
+                - "dynamodb:GetItem"
+                - "dynamodb:Scan"
+                - "dynamodb:Query"
                 - "dynamodb:UpdateItem"
               Resource: "arn:aws:dynamodb:eu-west-2:295760464315:table/master_of_malt"
       DeploymentPreference:
