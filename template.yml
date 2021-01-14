@@ -17,6 +17,7 @@ Resources:
               Action:
                 - "lambda:InvokeFunction"
                 - "dynamodb:ListTables"
+                - "events:DescribeRule"
               Resource: '*'
             - Effect: "Allow"
               Action:
@@ -31,12 +32,26 @@ Resources:
               Resource: "arn:aws:dynamodb:eu-west-2:295760464315:table/master_of_malt"
       DeploymentPreference:
         Type: AllAtOnce
-  EventBridgeTrigger:
+  ScheduledRule:
     Type: AWS::Events::Rule
     Properties:
       Description: "Trigger scan_mom_lambda"
       Name: "TriggerMomScan"
       ScheduleExpression: "cron(0/15 8-18 * * ? *)"
+      State: "ENABLED"
       Targets:
-        - Arn: "arn:aws:lambda:eu-west-2:295760464315:function:scan_mom_new_stock"
-          Id: "ScanMomLambda"
+        - Arn:
+            Fn::GetAtt:
+              - "ScanMomStock"
+              - "Arn"
+          Id: "TargetFunctionV1"
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref "ScanMomStock"
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn:
+        Fn::GetAtt:
+          - "ScheduledRule"
+          - "Arn"
