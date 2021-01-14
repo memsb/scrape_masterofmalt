@@ -1,5 +1,5 @@
 import unittest
-from src import storage
+import lib.storage as storage
 from unittest.mock import Mock, patch
 
 

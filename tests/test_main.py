@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock
-from src import main
+import main
 
 
 class TestMain(unittest.TestCase):

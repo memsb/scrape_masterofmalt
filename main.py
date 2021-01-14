@@ -1,5 +1,5 @@
-from src.scrape import get_latest_stock_additions, display_stock
-from src.storage import has_stock_update, store_stock
+from lib.scrape import get_latest_stock_additions, display_stock
+from lib.storage import has_stock_update, store_stock
 import logging
 
 logging.basicConfig(level=logging.INFO)

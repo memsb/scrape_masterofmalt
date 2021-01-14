@@ -1,7 +1,6 @@
 import unittest
-from src import scrape
+import lib.scrape as scrape
 import responses
-import requests
 from decimal import *
 
 

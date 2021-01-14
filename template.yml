@@ -9,7 +9,6 @@ Resources:
       Handler: main.lambda_handler
       Runtime: python3.8
       FunctionName: scan_mom_new_stock
-      CodeUri: ./src
       AutoPublishAlias: live
       Policies:
         - Version: "2012-10-17"

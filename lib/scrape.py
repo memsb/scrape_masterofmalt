@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup, NavigableString, Tag
+import bs4
 import requests
 from dateutil import parser
 from decimal import *
@@ -17,14 +17,14 @@ def format_price(price):
 def get_latest_stock_additions():
     source = requests.get("https://www.masterofmalt.com/new-arrivals/whisky-new-arrivals/").text
 
-    soup = BeautifulSoup(source, 'html.parser')
+    soup = bs4.BeautifulSoup(source, 'html.parser')
     content = soup.find('div', {'id': 'productBoxWideContainer'})
     stock = {'date': get_release_date(content.div.find('p').text), 'whiskies': []}
 
     for line in content:
-        if isinstance(line, NavigableString):
+        if isinstance(line, bs4.NavigableString):
             continue
-        if isinstance(line, Tag):
+        if isinstance(line, bs4.Tag):
             if line.has_attr('data-name'):
                 distillery = line.find('a', {'class': 'product-box-wide-distillery'})
                 price = line.find('div', {'class': 'product-box-wide-price'})
