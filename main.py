@@ -14,7 +14,7 @@ def main():
         store_stock(stock)
 
 
-def lambda_handler():
+def lambda_handler(event, lambda_context):
     main()
 
 
