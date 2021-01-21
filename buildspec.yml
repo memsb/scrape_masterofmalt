@@ -7,7 +7,6 @@ phases:
   build:
     commands:
       - sam build
-      - export BUCKET=buckleytech-lambda
       - sam package --s3-bucket $BUCKET --output-template-file outputtemplate.yml
 artifacts:
   type: zip
