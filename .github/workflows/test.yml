@@ -9,6 +9,8 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7, 3.8]
+    env:
+      AWS_DEFAULT_REGION: eu-west-2
 
     steps:
     - uses: actions/checkout@v2
